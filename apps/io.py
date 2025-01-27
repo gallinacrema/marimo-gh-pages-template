@@ -6,13 +6,18 @@ app = marimo.App(width="medium")
 
 @app.cell
 def _():
-    import functools
     import marimo as mo
+    return (mo,)
+
+
+@app.cell
+def _():
+    import functools
     import numpy as np
     import pandas as pd
     import openpyxl
     from numpy.linalg import inv, matrix_power
-    return functools, inv, matrix_power, mo, np, openpyxl, pd
+    return functools, inv, matrix_power, np, openpyxl, pd
 
 
 @app.cell
