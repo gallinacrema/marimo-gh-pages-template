@@ -22,26 +22,16 @@ def _():
 
 @app.cell
 def _(mo):
-    data_path_Z = mo.notebook_location() / "public" / "Z.npy"
-    data_path_x = mo.notebook_location() / "public" / "x.npy"
-    data_path_A = mo.notebook_location() / "public" / "A.npy"
-    data_path_L = mo.notebook_location() / "public" / "L.npy"
-    data_path_labels = mo.notebook_location() / "public" / "labels.npy"
-    return (
-        data_path_A,
-        data_path_L,
-        data_path_Z,
-        data_path_labels,
-        data_path_x,
-    )
+    data_path = mo.notebook_location() / "public" / "Matriz_Simetrica_MIOGAL21.xlsx"
+    return (data_path,)
 
 
 @app.cell
-def _(data_path_A, data_path_L, data_path_Z, data_path_x, np):
-    Z_MIOGAL_21 = np.load(str(data_path_Z))
-    x_MIOGAL_21 = np.load(str(data_path_x))
-    A_MIOGAL_21 = np.load(str(data_path_A))
-    L_MIOGAL_21 = np.load(str(data_path_L))
+def _(data_path, pd):
+    Z_MIOGAL_21 = pd.read_excel(data_path, sheet_name=1).iloc[5:76,2:73].to_numpy().astype(float)
+    x_MIOGAL_21 = pd.read_excel(data_path, sheet_name=1).iloc[87,2:73].to_numpy().astype(float)
+    A_MIOGAL_21 = pd.read_excel(data_path, sheet_name=4).iloc[5:76,2:73].to_numpy().astype(float)
+    L_MIOGAL_21 = pd.read_excel(data_path, sheet_name=6).iloc[5:76,2:73].to_numpy().astype(float)
     return A_MIOGAL_21, L_MIOGAL_21, Z_MIOGAL_21, x_MIOGAL_21
 
 
@@ -263,8 +253,8 @@ def _(numpy, requirements):
 
 
 @app.cell
-def _(data_path_labels, np):
-    labels = np.load(str(data_path_labels), allow_pickle=True)
+def _(data_path, pd):
+    labels = pd.read_excel(data_path, sheet_name=1).iloc[5:76,1].to_numpy()
     return (labels,)
 
 
