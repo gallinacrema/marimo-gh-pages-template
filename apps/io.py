@@ -17,22 +17,7 @@ def _():
     import pandas as pd
     import openpyxl
     from numpy.linalg import inv, matrix_power
-    from iotools.iotools import A, L, x_new, varepsilon, varepsilon_tilde, vc, ptil
-    return (
-        A,
-        L,
-        functools,
-        inv,
-        matrix_power,
-        np,
-        openpyxl,
-        pd,
-        ptil,
-        varepsilon,
-        varepsilon_tilde,
-        vc,
-        x_new,
-    )
+    return functools, inv, matrix_power, np, openpyxl, pd
 
 
 @app.cell
@@ -84,8 +69,6 @@ def _(data_path, np, pd):
     eC_MIOGAL_21 = np.array(
         [pd.read_excel(data_path, sheet_name=1).fillna(0).iloc[80, 74]]
     ).astype(float)
-
-    v_MIOGAL_21_pa = x_MIOGAL_21 - np.ones(Z_MIOGAL_21.shape[0])@Z_MIOGAL_21
     return (
         A_MIOGAL_21,
         C_MIOGAL_21,
@@ -93,7 +76,6 @@ def _(data_path, np, pd):
         Z_MIOGAL_21,
         eC_MIOGAL_21,
         e_MIOGAL_21,
-        v_MIOGAL_21_pa,
         x_MIOGAL_21,
     )
 
@@ -124,6 +106,223 @@ def _(
         )
     )
     return Z_bar_MIOGAL_21, x_bar_MIOGAL_21
+
+
+@app.cell
+def _(functools, np):
+    def coef(func):
+        @functools.wraps(func)
+        def ratio(array,x):
+            return array @ np.linalg.inv(np.diag(x))
+        return ratio
+    return (coef,)
+
+
+@app.cell
+def _(coef, numpy):
+    @coef
+    def A(Z: numpy.ndarray, x: numpy.ndarray) -> numpy.ndarray:
+        """
+        Compute the technical coefficients matrix
+
+        Parameters
+        ----------
+        Z : numpy.ndarray
+        The transactions matrix
+
+        x : numpy.ndarray
+        The vector of total outputs
+
+        Returns
+        -------
+        A : numpy.ndarray
+        The technical coefficients matrix
+        """
+        return  Z, x
+    return (A,)
+
+
+@app.cell
+def _(functools, np):
+    def leontief(func):
+        @functools.wraps(func)
+        def inverse(matrix):
+            return np.linalg.inv(np.identity(matrix.shape[0]) - matrix)
+        return inverse
+    return (leontief,)
+
+
+@app.cell
+def _(leontief, numpy):
+    @leontief
+    def L(A: numpy.ndarray) -> numpy.ndarray:
+        """
+        Compute the Leontief inverse matrix
+
+        Parameters
+        ----------
+        A : numpy.ndarray
+        The technical coefficients matrix
+
+        Returns
+        -------
+        L : numpy.ndarray
+        The Leontief inverse matrix
+        """
+        return A
+    return (L,)
+
+
+@app.cell
+def _(functools):
+    def requirements(func):
+        @functools.wraps(func)
+        def product(L,vector):
+            return L @ vector
+        return product
+    return (requirements,)
+
+
+@app.cell
+def _(numpy, requirements):
+    @requirements
+    def x_new(L: numpy.ndarray, f_new:numpy.ndarray) -> numpy.ndarray:
+        """
+        Compute the total outputs necessary to meet a new final demand vector
+
+        Parameters
+        ----------
+        L : numpy.ndarray
+        The Leontief inverse matrix
+
+        f_new : numpy.ndarray
+        The vector of new final demands
+
+        Returns
+        -------
+        x_new : numpy.ndarray
+        The new values of total outputs
+        """
+        return L, f_new
+    return (x_new,)
+
+
+@app.cell
+def _(functools, np):
+    def impact(func):
+        @functools.wraps(func)
+        def translation(vector,x):
+            return np.diag(vector) @ x
+        return translation
+    return (impact,)
+
+
+@app.cell
+def _(impact, numpy):
+    @impact
+    def varepsilon(e: numpy.ndarray, x_new: numpy.ndarray) -> numpy.ndarray:
+        """
+        Compute the total labor income necessary to meet a new final demand vector
+
+        Parameters
+        ----------
+        e : numpy.ndarray
+        The original vector of labor incomes per monetary unit
+
+        x_new : numpy.ndarray
+        The new values of total outputs
+
+        Returns
+        -------
+        varepsilon : numpy.ndarray
+        The new values of total labor incomes
+        """
+        return e, x_new
+    return (varepsilon,)
+
+
+@app.cell
+def _(functools, np):
+    def disaggregation(func):
+        @functools.wraps(func)
+        def proportion(matrix,vector):
+            return matrix @ np.diag(vector)
+        return proportion
+    return (disaggregation,)
+
+
+@app.cell
+def _(disaggregation, numpy):
+    @disaggregation
+    def varepsilon_tilde(
+        P: numpy.ndarray, varepsilon: numpy.ndarray
+    ) -> numpy.ndarray:
+        """
+        Compute a matrix of employment by sector by occupation type
+
+        Parameters
+        ----------
+        P : numpy.ndarray
+        An occupation-by-industry matrix
+
+        varepsilon : numpy.ndarray
+        The new values of total labor incomes
+
+        Returns
+        -------
+        varepsilon_tilde : numpy.ndarray
+        The new values of total labor incomes by occupation by sector
+        """
+        return P, varepsilon
+    return (varepsilon_tilde,)
+
+
+@app.cell
+def _(coef, numpy):
+    @coef
+    def vc(v: numpy.ndarray, x: numpy.ndarray) -> numpy.ndarray:
+        """
+        Compute the vector of value-added coefficients
+
+        Parameters
+        ----------
+        v : numpy.ndarray
+        The vector of total value-added expenditures by each sector
+
+        x : numpy.ndarray
+        The vector of total outputs
+
+        Returns
+        -------
+        vc : numpy.ndarray
+        The vector of value-added coefficients
+        """
+        return  v, x
+    return (vc,)
+
+
+@app.cell
+def _(numpy, requirements):
+    @requirements
+    def ptil(L_prime: numpy.ndarray, vc: numpy.ndarray) -> numpy.ndarray:
+        """
+        Compute the index prices
+
+        Parameters
+        ----------
+        L_prime : numpy.ndarray
+        The Leontief inverse matrix transposed
+
+        vc : numpy.ndarray
+        The vector of value-added coefficients
+
+        Returns
+        -------
+        ptil : numpy.ndarray
+        The vector of index prices
+        """
+        return L_prime, vc
+    return (ptil,)
 
 
 @app.cell
