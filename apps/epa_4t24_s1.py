@@ -72,6 +72,7 @@ def _(d1, df, mo, pd):
                         values="Factor",
                         observed=False,
                     )
+                    .iloc[:,1:]
                     .assign(Total=lambda x: x.sum(
                                 axis=1
                             )
@@ -85,7 +86,6 @@ def _(d1, df, mo, pd):
                 show_column_summaries=False,
                 pagination=False,
                 format_mapping={
-                    "Menor de 56": "{:.0f}",
                     "56": "{:.0f}",
                     "57": "{:.0f}",
                     "58": "{:.0f}",
