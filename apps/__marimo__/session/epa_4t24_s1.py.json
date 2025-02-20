@@ -1,0 +1,64 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.11.7"
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "f2b02953120dfa4bb8b28145aa712b24",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "e7d9e10efd8cacd7b859daf826fc0a5a",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "25e57df66d366105c4ec8530d3aedc31",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "fed3ca94a67ba59f448d3ebdc3bf1eb1",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "7ead8d8d4b99cccfef4fcbf3a14e0900",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "iVBs",
+      "code_hash": "7cdd682db1e706727ac13a3c5d1948e0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<span class=\"markdown prose dark:prose-invert\"><h1 id=\"epa-4o-trimestre-2024\">EPA 4\u00ba Trimestre 2024</h1>\n<span class=\"paragraph\">Os microdatos da <em>Encuesta de Poblaci\u00f3n Activa</em> proporcionan informaci\u00f3n detallada sobre o mercado de traballo galego. En particular, fornecen de valiosa informaci\u00f3n sobre as caracter\u00edsticas dos traballadores ocupados desagregadas por sector e ocupaci\u00f3n.</span>\n<span class=\"paragraph\">Unha destas caracter\u00edsticas \u00e9 a idade do traballador, unha variable fundamental de cara a prever onde se producir\u00e1n vacantes no pr\u00f3ximo futuro derivadas das decisi\u00f3ns de xubilaci\u00f3n por parte dos traballadores actuais.</span>\n<span class=\"paragraph\">Como exemplo, presentamos a continuaci\u00f3n o n\u00famero de traballadores maiores de 55 anos por idade, sector de actividade (CNAE-2009 a dous d\u00edxitos) e ocupaci\u00f3n (CNO-2011 a dous d\u00edxitos):</span></span>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}

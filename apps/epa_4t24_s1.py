@@ -39,22 +39,67 @@ def _(df, mo, np):
     return (d1,)
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(
+        r"""
+        # EPA 4º Trimestre 2024
+        Os microdatos da *Encuesta de Población Activa* proporcionan información detallada sobre o mercado de traballo galego. En particular, fornecen de valiosa información sobre as características dos traballadores ocupados desagregadas por sector e ocupación.
+
+        Unha destas características é a idade do traballador, unha variable fundamental de cara a prever onde se producirán vacantes no próximo futuro derivadas das decisións de xubilación por parte dos traballadores actuais.
+
+        Como exemplo, presentamos a continuación o número de traballadores maiores de 55 anos por idade, sector de actividade (CNAE-2009 a dous díxitos) e ocupación (CNO-2011 a dous díxitos):
+        """
+    )
+    return
+
+
 @app.cell
 def _(d1, df, mo, pd):
     mo.vstack(
         (
             d1,
             mo.ui.table(
-                pd.DataFrame(
-                    df.query("Sector==@d1.value").groupby("Ocupación").Factor.sum()
-                )
-                .rename(columns={"Factor": "Ocupados"})
-                .reset_index()
-                .to_dict(orient="records"),
+                (
+                    pd.DataFrame(
+                        df.query("Sector==@d1.value")
+                        .groupby(["Ocupación", "Idade"], observed=False)
+                        .Factor.sum()
+                    )
+                    .pivot_table(
+                        index="Ocupación",
+                        columns="Idade",
+                        values="Factor",
+                        observed=False,
+                    )
+                    .assign(Total=lambda x: x.sum(
+                                axis=1
+                            )
+                    )
+                    .T
+                    .assign(Total=lambda x:x.sum(axis=1))
+                    .T
+                    .reset_index()
+                ),
                 selection=None,
                 show_column_summaries=False,
                 pagination=False,
-                format_mapping={"Ocupados": "{:.0f}"},
+                format_mapping={
+                    "Menor de 56": "{:.0f}",
+                    "56": "{:.0f}",
+                    "57": "{:.0f}",
+                    "58": "{:.0f}",
+                    "59": "{:.0f}",
+                    "60": "{:.0f}",
+                    "61": "{:.0f}",
+                    "62": "{:.0f}",
+                    "63": "{:.0f}",
+                    "64": "{:.0f}",
+                    "65": "{:.0f}",
+                    "Mais de 65": "{:.0f}",
+                    "Total": "{:.0f}",
+                },
+                wrapped_columns=['Ocupación']
             ),
         )
     )
