@@ -44,7 +44,7 @@ def _(mo):
     mo.md(
         r"""
         # EPA 4º Trimestre 2024
-        Os microdatos da *Encuesta de Población Activa* proporcionan información detallada sobre o mercado de traballo galego. En particular, fornecen de valiosa información sobre as características dos traballadores ocupados desagregadas por sector e ocupación.
+        Os microdatos da *Encuesta de Población Activa* (EPA) proporcionan información detallada sobre o mercado de traballo galego. En particular, fornecen de valiosa información sobre as características dos traballadores ocupados desagregadas por sector e ocupación.
 
         Unha destas características é a idade do traballador, unha variable fundamental de cara a prever onde se producirán vacantes no próximo futuro derivadas das decisións de xubilación por parte dos traballadores actuais.
 
@@ -81,6 +81,74 @@ def _(d1, df, mo, pd):
                     .assign(Total=lambda x:x.sum(axis=1))
                     .T
                     .reset_index()
+                ),
+                selection=None,
+                show_column_summaries=False,
+                pagination=False,
+                format_mapping={
+                    "56": "{:.0f}",
+                    "57": "{:.0f}",
+                    "58": "{:.0f}",
+                    "59": "{:.0f}",
+                    "60": "{:.0f}",
+                    "61": "{:.0f}",
+                    "62": "{:.0f}",
+                    "63": "{:.0f}",
+                    "64": "{:.0f}",
+                    "65": "{:.0f}",
+                    "Mais de 65": "{:.0f}",
+                    "Total": "{:.0f}",
+                },
+                wrapped_columns=['Ocupación']
+            ),
+        )
+    )
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(
+        r"""
+        ## Xubilacións
+        Os microdatos da EPA tamén permiten estimar con relativa precisión o número de traballadores que se xubilan nun período determinado.
+
+        Como exemplo, presentamos a continuación o número de traballadores que se xubilaron ao longo do ano 2014 desagregados por idade, sector de actividade (CNAE-2009 a dous díxitos) e ocupación (CNO-2011 a dous díxitos). O dato da idade é importante, xa que a idade de xubilación efectiva varía moito por sector e ocupación:
+        """
+    )
+    return
+
+
+@app.cell
+def _(d1, df, mo, pd):
+    mo.vstack(
+        (
+            d1,
+            mo.ui.table(
+                (
+                    pd.DataFrame(
+                        df.query(
+        "Sector_Anterior==@d1.value&Meses<13&Relación=='Inactivos 3 (resto de inactivos)'"
+    )
+                        .groupby(["Ocupación_Anterior", "Idade"], observed=False)
+                        .Factor.sum()
+                    )
+                    .pivot_table(
+                        index="Ocupación_Anterior",
+                        columns="Idade",
+                        values="Factor",
+                        observed=False,
+                    )
+                    .iloc[:,1:]
+                    .assign(Total=lambda x: x.sum(
+                                axis=1
+                            )
+                    )
+                    .T
+                    .assign(Total=lambda x:x.sum(axis=1))
+                    .T
+                    .reset_index()
+                    .rename(columns={'Ocupación_Anterior':'Ocupación'})
                 ),
                 selection=None,
                 show_column_summaries=False,

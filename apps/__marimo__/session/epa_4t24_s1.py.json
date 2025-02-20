@@ -43,8 +43,15 @@
     },
     {
       "id": "PKri",
-      "code_hash": "7cdd682db1e706727ac13a3c5d1948e0",
-      "outputs": [],
+      "code_hash": "be753dd29524d6b1a102e0abac50bd26",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<span class=\"markdown prose dark:prose-invert\"><h1 id=\"epa-4o-trimestre-2024\">EPA 4\u00ba Trimestre 2024</h1>\n<span class=\"paragraph\">Os microdatos da <em>Encuesta de Poblaci\u00f3n Activa</em> (EPA) proporcionan informaci\u00f3n detallada sobre o mercado de traballo galego. En particular, fornecen de valiosa informaci\u00f3n sobre as caracter\u00edsticas dos traballadores ocupados desagregadas por sector e ocupaci\u00f3n.</span>\n<span class=\"paragraph\">Unha destas caracter\u00edsticas \u00e9 a idade do traballador, unha variable fundamental de cara a prever onde se producir\u00e1n vacantes no pr\u00f3ximo futuro derivadas das decisi\u00f3ns de xubilaci\u00f3n por parte dos traballadores actuais.</span>\n<span class=\"paragraph\">Como exemplo, presentamos a continuaci\u00f3n o n\u00famero de traballadores maiores de 55 anos por idade, sector de actividade (CNAE-2009 a dous d\u00edxitos) e ocupaci\u00f3n (CNO-2011 a dous d\u00edxitos):</span></span>"
+          }
+        }
+      ],
       "console": []
     },
     {
@@ -62,8 +69,21 @@
     },
     {
       "id": "Xref",
-      "code_hash": "a071cc908cbbf23780e8615c7c065705",
+      "code_hash": "a3475edf24b2c8da8c9879b288d16f4b",
       "outputs": [],
+      "console": []
+    },
+    {
+      "id": "VWLd",
+      "code_hash": "e8c2dc084f1ff3aabe31359239a35ca6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<span class=\"markdown prose dark:prose-invert\"><h2 id=\"xubilacions\">Xubilaci\u00f3ns</h2>\n<span class=\"paragraph\">Os microdatos da EPA tam\u00e9n permiten estimar con relativa precisi\u00f3n o n\u00famero de traballadores que se xubilan nun per\u00edodo determinado.</span>\n<span class=\"paragraph\">Como exemplo, presentamos a continuaci\u00f3n o n\u00famero de traballadores que se xubilaron ao longo do ano 2014 desagregados por idade, sector de actividade (CNAE-2009 a dous d\u00edxitos) e ocupaci\u00f3n (CNO-2011 a dous d\u00edxitos). O dato da idade \u00e9 importante, xa que a idade de xubilaci\u00f3n efectiva var\u00eda moito por sector e ocupaci\u00f3n:</span></span>"
+          }
+        }
+      ],
       "console": []
     }
   ]
