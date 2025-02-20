@@ -36,7 +36,8 @@ def _(datos, pd):
 @app.cell
 def _(df, mo, np):
     d1 = mo.ui.dropdown(np.sort(df.Sector.dropna().unique()), label='Sector', value='01-Agricultura, gandaría, caza e servizos relacionados con elas')
-    return (d1,)
+    d2 = mo.ui.dropdown(np.sort(df.Sector.dropna().unique()), label='Sector', value='01-Agricultura, gandaría, caza e servizos relacionados con elas')
+    return d1, d2
 
 
 @app.cell(hide_code=True)
@@ -128,7 +129,7 @@ def _(d1, df, mo, pd):
                 (
                     pd.DataFrame(
                         df.query(
-        "Sector_Anterior==@d1.value&Meses<13&Relación=='Inactivos 3 (resto de inactivos)'"
+        "Sector_Anterior==@d2.value&Meses<13&Relación=='Inactivos 3 (resto de inactivos)'"
     )
                         .groupby(["Ocupación_Anterior", "Idade"], observed=False)
                         .Factor.sum()
