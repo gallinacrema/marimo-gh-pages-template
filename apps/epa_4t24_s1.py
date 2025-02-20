@@ -121,10 +121,10 @@ def _(mo):
 
 
 @app.cell
-def _(d1, df, mo, pd):
+def _(d2, df, mo, pd):
     mo.vstack(
         (
-            d1,
+            d2,
             mo.ui.table(
                 (
                     pd.DataFrame(
