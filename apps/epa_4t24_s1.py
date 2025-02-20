@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.11.5"
+__generated_with = "0.11.7"
 app = marimo.App(width="medium")
 
 
@@ -12,9 +12,10 @@ def _():
 
 @app.cell
 def _():
+    import pyarrow
     import numpy as np
     import pandas as pd
-    return np, pd
+    return np, pd, pyarrow
 
 
 @app.cell
