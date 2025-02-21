@@ -114,7 +114,7 @@ def _(mo):
         ## Xubilacións
         Os microdatos da EPA tamén permiten estimar con relativa precisión o número de traballadores que se xubilan nun período determinado.
 
-        Como exemplo, presentamos a continuación o número de traballadores que se xubilaron ao longo do ano 2014 desagregados por idade, sector de actividade (CNAE-2009 a dous díxitos) e ocupación (CNO-2011 a dous díxitos). O dato da idade é importante, xa que a idade de xubilación efectiva varía moito por sector e ocupación:
+        Como exemplo, presentamos a continuación o número de traballadores que se xubilaron ao longo do ano 2024. O total de **4.480** traballadores podemos desagregalo por idade, sector de actividade (CNAE-2009 a dous díxitos) e ocupación (CNO-2011 a dous díxitos). O dato da idade é importante, xa que a idade de xubilación efectiva varía moito por sector e ocupación:
         """
     )
     return
@@ -129,7 +129,7 @@ def _(d2, df, mo, pd):
                 (
                     pd.DataFrame(
                         df.query(
-        "Sector_Anterior==@d2.value&Meses<13&Relación=='Inactivos 3 (resto de inactivos)'"
+        "Sector_Anterior==@d2.value&Meses<4&Relación=='Inactivos 3 (resto de inactivos)'&Situación=='Percibía una pensión de jubilación o unos ingresos de prejubilación'"
     )
                         .groupby(["Ocupación_Anterior", "Idade"], observed=False)
                         .Factor.sum()
