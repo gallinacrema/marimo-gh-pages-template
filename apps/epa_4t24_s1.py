@@ -49,7 +49,7 @@ def _(mo):
 
         Unha destas características é a idade do traballador, unha variable fundamental de cara a prever onde se producirán vacantes no próximo futuro derivadas das decisións de xubilación por parte dos traballadores actuais.
 
-        Como exemplo, presentamos a continuación o número de traballadores maiores de 55 anos por idade, sector de actividade (CNAE-2009 a dous díxitos) e ocupación (CNO-2011 a dous díxitos):
+        Como exemplo, presentamos a continuación o número de traballadores maiores de 56 anos por idade, sector de actividade (CNAE-2009 a dous díxitos) e ocupación (CNO-2011 a dous díxitos):
         """
     )
     return
@@ -73,7 +73,7 @@ def _(d1, df, mo, pd):
                         values="Factor",
                         observed=False,
                     )
-                    .iloc[:,1:]
+                    .iloc[:,2:]
                     .assign(Total=lambda x: x.sum(
                                 axis=1
                             )
@@ -87,7 +87,6 @@ def _(d1, df, mo, pd):
                 show_column_summaries=False,
                 pagination=False,
                 format_mapping={
-                    "56": "{:.0f}",
                     "57": "{:.0f}",
                     "58": "{:.0f}",
                     "59": "{:.0f}",
@@ -114,7 +113,7 @@ def _(mo):
         ## Xubilacións
         Os microdatos da EPA tamén permiten estimar con relativa precisión o número de traballadores que se xubilan nun período determinado.
 
-        Como exemplo, presentamos a continuación o número de traballadores que se xubilaron ao longo do ano 2024. O total de **4.480** traballadores podemos desagregalo por idade, sector de actividade (CNAE-2009 a dous díxitos) e ocupación (CNO-2011 a dous díxitos). O dato da idade é importante, xa que a idade de xubilación efectiva varía moito por sector e ocupación:
+        Como exemplo, presentamos a continuación o número de traballadores que se xubilaron ao longo do último trimestre do ano 2024. O total de **4.480** traballadores podemos desagregalo por idade, sector de actividade (CNAE-2009 a dous díxitos) e ocupación (CNO-2011 a dous díxitos). O dato da idade é importante, xa que a idade de xubilación efectiva varía moito por sector e ocupación:
         """
     )
     return
@@ -131,16 +130,15 @@ def _(d2, df, mo, pd):
                         df.query(
         "Sector_Anterior==@d2.value&Meses<4&Relación=='Inactivos 3 (resto de inactivos)'&Situación=='Percibía una pensión de jubilación o unos ingresos de prejubilación'"
     )
-                        .groupby(["Ocupación_Anterior", "Idade"], observed=False)
+                        .groupby(["Ocupación_Anterior", "Idade2"], observed=False)
                         .Factor.sum()
                     )
                     .pivot_table(
                         index="Ocupación_Anterior",
-                        columns="Idade",
+                        columns="Idade2",
                         values="Factor",
                         observed=False,
                     )
-                    .iloc[:,1:]
                     .assign(Total=lambda x: x.sum(
                                 axis=1
                             )
@@ -155,10 +153,7 @@ def _(d2, df, mo, pd):
                 show_column_summaries=False,
                 pagination=False,
                 format_mapping={
-                    "56": "{:.0f}",
-                    "57": "{:.0f}",
-                    "58": "{:.0f}",
-                    "59": "{:.0f}",
+                    "Menos de 60": "{:.0f}",
                     "60": "{:.0f}",
                     "61": "{:.0f}",
                     "62": "{:.0f}",
